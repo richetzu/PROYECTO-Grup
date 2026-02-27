@@ -48,18 +48,28 @@ return (
             ${props.item.precio}
         </Text>
 
-        <TouchableOpacity 
-            style={styles.closeButton}
-            onPress={() => setVisible(false)}
-        >
-            <Text style={styles.closeButtonText}>Cerrar</Text>
-            style={styles.agregarAlCarrito}
-            onPress={() => {
-                agregarAlCarrito(props.item);
-                setVisible(false);
-                <Text style={styles.AgregarButtonText}>Agregar al Carrito</Text>
-            }}
-        </TouchableOpacity>
+        {/* BOTÓN CERRAR */}
+<TouchableOpacity 
+  style={styles.closeButton}
+  onPress={() => setVisible(false)}
+>
+  <Text style={styles.closeButtonText}>
+    Cerrar
+  </Text>
+</TouchableOpacity>
+
+{/* BOTÓN AGREGAR AL CARRITO */}
+<TouchableOpacity 
+  style={styles.agregarAlCarrito}
+  onPress={() => {
+    agregarAlCarrito(props.item);
+    setVisible(false);
+  }}
+>
+  <Text style={styles.AgregarButtonText}>
+    Agregar al Carrito
+  </Text>
+</TouchableOpacity>
         </View>
         </Modal>
 
@@ -93,7 +103,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   price: {
-    fontSize: 16,
+    fontSize: 20,
     color: '#00E676',
     fontWeight: '600',
     marginTop: 6,
@@ -134,6 +144,7 @@ modalImage: {
     backgroundColor: '#E53935',
     padding: 12,
     borderRadius: 10,
+    marginTop: 10,
   },
   closeButtonText: {
     color: '#fff',
@@ -145,9 +156,10 @@ modalImage: {
     padding: 10,
     borderRadius: 8,
     marginBottom: 10,
+    marginTop: 10,
   },
   AgregarButtonText: {
-    color: '#000',
+    color: '#ffffff',
     fontWeight: 'bold', 
   }
 });

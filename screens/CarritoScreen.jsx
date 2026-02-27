@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
+import React, { useContext } from 'react'
 import { CarritoContext } from '../context/Carrito.Context';
 import { FlatList } from 'react-native-gesture-handler';
 
@@ -14,6 +14,10 @@ export default function CarritoScreen() {
         data={carrito}
         renderItem={({ item }) => (
           <View style={styles.itemContainer}>
+            <Image
+              source={{ uri: item.imagen }}
+              style={styles.itemImage}
+            />
             <Text style={styles.itemTitle}>{item.titulo}</Text>
             <Text style={styles.itemPrice}>${item.precio} x {item.cantidad}</Text>
             <TouchableOpacity
@@ -43,14 +47,15 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
     borderRadius: 5,
+    alignItems: 'center',
   },
   itemTitle: {
-    fontSize: 16,
+    fontSize: 26,
     fontWeight: 'bold',
     color: '#fff',
   },
   itemPrice: {
-    fontSize: 14,
+    fontSize: 20,
     color: '#ccc',
   },
   removeButton: {
@@ -70,5 +75,13 @@ const styles = StyleSheet.create({
     color: '#fff',
     textAlign: 'center',
     marginTop: 20,
+  },
+  itemImage: {
+    width: 100,
+    height: 150,
+    borderRadius: 5,
+    marginBottom: 10,
+    alignItems: 'center',
+    
   },
 })
