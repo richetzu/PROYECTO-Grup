@@ -1,87 +1,34 @@
-import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
-import React, { useContext } from 'react'
+import React, { useContext } from 'react';
+import { View, Text, Button, StyleSheet } from 'react-native';
 import { CarritoContext } from '../context/Carrito.Context';
-import { FlatList } from 'react-native-gesture-handler';
-
 
 export default function CarritoScreen() {
+  const { carrito, eliminarDelCarrito } = useContext(CarritoContext);
 
-  const { carrito, eliminarDelCarrito, total } = useContext(CarritoContext);
+  // 👇 Convertimos cada precio a número y sumamos
+  const total = carrito.reduce((acc, item) => {
+    const precio = Number(item.precio); // 👈 asegura que sea número
+    return acc + (isNaN(precio) ? 0 : precio);
+  }, 0);
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={carrito}
-        renderItem={({ item }) => (
-          <View style={styles.itemContainer}>
-            <Image
-              source={{ uri: item.imagen }}
-              style={styles.itemImage}
-            />
-            <Text style={styles.itemTitle}>{item.titulo}</Text>
-            <Text style={styles.itemPrice}>${item.precio} x {item.cantidad}</Text>
-            <TouchableOpacity
-              style={styles.removeButton}
-              onPress={() => eliminarDelCarrito(item.titulo)}
-              >
-                <Text style={styles.Remover}>Eliminar</Text>
-              </TouchableOpacity>
-          </View>
-        )}
-        
-      ></FlatList>
-      <Text style={styles.total}>
-        Total: ${total}</Text>
+      {carrito.map((item, index) => (
+        <View key={index} style={styles.item}>
+          <Text style={styles.text}>{item.titulo}</Text>
+          <Text style={styles.text}>${item.precio}</Text>
+          <Button title="Eliminar" onPress={() => eliminarDelCarrito(index)} />
+        </View>
+      ))}
+      <Text style={styles.total}>Total: ${total}</Text>
+      <Button title="CERRAR SESIÓN" onPress={() => console.log('Cerrar sesión')} />
     </View>
-  )
-}  
+  );
+}
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: 'black',
-  },
-  itemContainer: {
-    backgroundColor: '#1E1E1E',
-    padding: 10,
-    marginBottom: 10,
-    borderRadius: 5,
-    alignItems: 'center',
-  },
-  itemTitle: {
-    fontSize: 26,
-    fontWeight: 'bold',
-    color: '#fff',
-  },
-  itemPrice: {
-    fontSize: 20,
-    color: '#ccc',
-  },
-  removeButton: {
-    backgroundColor: '#ff4040',
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    borderRadius: 5,
-    marginTop: 5,
-  },
-  Remover: {
-    color: '#fff',
-    fontWeight: 'bold',
-  },
-  total: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#fff',
-    textAlign: 'center',
-    marginTop: 20,
-  },
-  itemImage: {
-    width: 100,
-    height: 150,
-    borderRadius: 5,
-    marginBottom: 10,
-    alignItems: 'center',
-    
-  },
-})
+  container: { flex: 1, padding: 20, backgroundColor: '#111' },
+  item: { marginBottom: 15 },
+  text: { color: '#fff', fontSize: 18 },
+  total: { fontSize: 22, fontWeight: 'bold', color: '#0f0', marginTop: 20 }
+});
