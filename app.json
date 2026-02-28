@@ -16,13 +16,11 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.michael.appventas",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff",
-        "package": "com.michael.appventas"
-      },
-      "edgeToEdgeEnabled": true,
-      "package": "com.anonymous.app_ventas"
+        "backgroundColor": "#ffffff"
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
