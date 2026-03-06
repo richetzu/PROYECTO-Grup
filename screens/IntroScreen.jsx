@@ -1,9 +1,15 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, Button, Image } from 'react-native';
 
 export default function IntroScreen({ navigation }) {
   return (
+
+    
     <View style={styles.container}>
+      <Image
+        source={{ uri: 'https://images.pexels.com/photos/8721318/pexels-photo-8721318.jpeg' }}
+        style={styles.image}
+      />
       <Text style={styles.title}>Bienvenidos a Quitox Games </Text>
       <Text style={styles.subtitle}>Pulse continuar para realizar su registrarte</Text>
 
@@ -16,7 +22,22 @@ export default function IntroScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#111' },
-  title: { fontSize: 28, fontWeight: 'bold', color: '#0f0', marginBottom: 20 },
-  subtitle: { fontSize: 18, color: '#fff' }
+  container: { flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+  backgroundColor: '#111'
+},
+  title: { fontSize: 28,
+  fontWeight: 'bold', 
+  color: '#0f0', 
+  marginBottom: 20 },
+  subtitle: { fontSize: 18,
+    color: '#fff' 
+    },
+  image: { width: 250,
+    height: 250,
+    marginBottom: 30,
+    borderRadius: 20 
+    }
+
 }); 
