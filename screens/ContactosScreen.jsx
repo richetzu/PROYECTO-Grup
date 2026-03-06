@@ -5,8 +5,8 @@ const ContactosScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Lista de Contactos</Text>
-      <Text style={styles.contact}>Juan Pérez</Text>
-      <Text style={styles.contact}>María Gómez</Text>
+      <Text style={styles.contact}>Michael Arteaga</Text>
+      <Text style={styles.contact}>Richard Pastaz</Text>
     </View>
   );
 }; 

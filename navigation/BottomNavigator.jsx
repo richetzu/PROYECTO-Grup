@@ -36,7 +36,8 @@ export default function App() {
         children={[
           <Stack.Screen name="Intro" component={IntroScreen} key="Intro" />,
           <Stack.Screen name="Registro" component={RegistroScreen} key="Registro" />,
-          <Stack.Screen name="Menu" component={MyTabs} key="Menu" /> {/* ✅ aquí va el Tab Navigator */},
+          <Stack.Screen name="Menu" component={MyTabs} key="Menu" />,
+           {/* ✅ aquí va el Tab Navigator */},
         ]}
       >
       </Stack.Navigator>
