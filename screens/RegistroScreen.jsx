@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet,Image } from 'react-native';
 
 export default function RegistroScreen({ navigation }) {
   const [usuario, setUsuario] = useState('');
@@ -12,6 +12,10 @@ export default function RegistroScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
+      <Image
+              source={{ uri: 'https://images.pexels.com/photos/8721318/pexels-photo-8721318.jpeg' }}
+              style={styles.image}
+            />
       <Text style={styles.title}>Registro</Text>
       <TextInput
         style={styles.input}
@@ -32,7 +36,26 @@ export default function RegistroScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', padding: 20, backgroundColor: '#111' },
-  title: { fontSize: 24, fontWeight: 'bold', marginBottom: 20, color: '#0f0' },
-  input: { borderWidth: 1, borderColor: '#0f0', padding: 10, marginBottom: 15, color: '#fff' }
+  container: { flex: 1, 
+  justifyContent: 'center', 
+  padding: 20, 
+  backgroundColor: '#111' },
+  title: { fontSize: 24, 
+    fontWeight: 'bold',
+    marginBottom: 20,
+    color: '#0f0' },
+  input: { borderWidth: 1, 
+    borderColor: '#0f0', 
+    padding: 10, 
+    marginBottom: 15, 
+    color: '#bbbbbb' 
+  },
+    image: { 
+    width: 200, 
+    height: 200, 
+    marginBottom: 30, 
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
 });
