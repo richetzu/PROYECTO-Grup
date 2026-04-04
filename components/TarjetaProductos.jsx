@@ -15,7 +15,7 @@ export default function TarjetaProductos(props) {
   const { item, navigation } = props;
   const [visible, setVisible] = useState(false);
 
-  const handleAgregar = async () => {
+  async function handleAgregar() {
     const producto = {
       nombre: item.titulo,
       precio: item.precio,

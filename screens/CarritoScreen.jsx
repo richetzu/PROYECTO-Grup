@@ -3,7 +3,11 @@ import React, { useCallback, useState, useContext } from 'react'
 import { UsuarioContext } from '../context/UsuarioContext'
 import { useFocusEffect } from '@react-navigation/native'
 import { FlatList } from 'react-native-gesture-handler'
-import { obtenerCarrito, eliminarCarrito, vaciarCarrito } from '../services/carritoDB'
+import { obtenerCarrito,
+        eliminarCarrito,
+        aumentarCantidad,
+        disminuirCantidad
+        } from '../services/carritoDB'
 import { guardarCompra } from '../services/comprasDB'
 
 export default function CarritoScreen({ navigation }) {
@@ -15,7 +19,8 @@ export default function CarritoScreen({ navigation }) {
   const [facturaTexto, setFacturaTexto] = useState('')
   const [fechaTexto, setFechaTexto] = useState('')
 
-  const cargarCarrito = async () => {
+
+    async function cargarCarrito() {
     const data = await obtenerCarrito()
     setCarrito(data)
 
@@ -25,6 +30,15 @@ export default function CarritoScreen({ navigation }) {
 
     setTotal(totalCalculado)
   }
+  async function aumentar(nombre)  {
+      await aumentarCantidad(nombre)
+      cargarCarrito() // refresca UI
+    }
+
+    async function disminuir(nombre) {
+      await disminuirCantidad(nombre)
+      cargarCarrito() // refresca UI
+    }
 
   useFocusEffect(
     useCallback(() => {
@@ -32,18 +46,13 @@ export default function CarritoScreen({ navigation }) {
     }, [])
   )
 
-  const eliminarItem = async (id) => {
+  async function eliminarItem(id) {
     await eliminarCarrito(id)
     cargarCarrito() // refresca UI
   }
 
-  const handleCheckout = async () => {
+  async function handleCheckout() {
     const items = await obtenerCarrito()
-
-    if (!items || items.length === 0) {
-      Alert.alert('Carrito vacío', 'Agrega productos antes de proceder a factura')
-      return
-    }
 
     const detalleProductos = items
       .map(item => `${item.nombre} x${item.cantidad}`)
@@ -58,6 +67,25 @@ export default function CarritoScreen({ navigation }) {
     setFechaTexto(fechaFormateada)
     setSuccessVisible(true)
   }
+  if(!carrito || carrito.length === 0) {
+  return (
+    <View style={styles.emptyContainer}>
+      <Text style={styles.emptyText}>
+        Tu carrito está vacío 🛒
+      </Text>
+
+      <TouchableOpacity
+        style={styles.goShopButton}
+        onPress={() =>
+          navigation.navigate('Productos')
+        }
+      >
+        <Text style={styles.goShopText}>
+          Ir a Productos
+        </Text>
+      </TouchableOpacity>
+    </View>
+  )}
 
   return (
     <View style={styles.container}>
@@ -73,9 +101,27 @@ export default function CarritoScreen({ navigation }) {
               style={styles.itemImage}
             />
             <Text style={styles.itemTitle}>{item.nombre}</Text>
+            <View style={styles.cantidadContainer}>
+  <TouchableOpacity
+    style={styles.botonCantidad}
+    onPress={() => disminuir(item.nombre)}
+  >
+    <Text style={styles.botonTexto}>-</Text>
+  </TouchableOpacity>
+
+  <Text style={styles.cantidad}>{item.cantidad}</Text>
+
+  <TouchableOpacity
+    style={styles.botonCantidad}
+    onPress={() => aumentar(item.nombre)}
+  >
+    <Text style={styles.botonTexto}>+</Text>
+  </TouchableOpacity>
+</View>
             <Text style={styles.itemPrice}>
               ${item.precio} x {item.cantidad}
             </Text>
+
 
             <TouchableOpacity
               style={styles.removeButton}
@@ -85,7 +131,10 @@ export default function CarritoScreen({ navigation }) {
             </TouchableOpacity>
           </View>
         )}
-      />
+        
+      /> 
+        
+      
 
       <Text style={styles.total}>
         Total: ${total}
@@ -97,7 +146,7 @@ export default function CarritoScreen({ navigation }) {
         activeOpacity={0.8}
         hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
       >
-        <Text style={styles.checkoutButtonText}>Proceder a factura</Text>
+        <Text style={styles.checkoutButtonText}>Ir a pagar 💳</Text>
       </TouchableOpacity>
 
       <Modal
@@ -189,6 +238,42 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     alignItems: 'center',
   },
+  cantidadContainer: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  marginVertical: 10,
+},
+
+botonCantidad: {
+  backgroundColor: '#00E676',
+  paddingHorizontal: 12,
+  paddingVertical: 5,
+  borderRadius: 5,
+},
+
+botonTexto: {
+  color: '#000',
+  fontSize: 18,
+  fontWeight: 'bold',
+},
+
+cantidad: {
+  color: '#fff',
+  fontSize: 18,
+  marginHorizontal: 10,
+},
+emptyContainer: {
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+  backgroundColor: 'black',
+},
+
+emptyText: {
+  color: '#fff',
+  fontSize: 20,
+  marginBottom: 20,
+},
   checkoutButton: {
     backgroundColor: '#00E676',
     paddingVertical: 14,
@@ -263,4 +348,29 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 18,
   },
+  emptyContainer: {
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+  backgroundColor: 'black',
+},
+
+emptyText: {
+  color: '#fff',
+  fontSize: 20,
+  marginBottom: 20,
+},
+
+goShopButton: {
+  backgroundColor: '#00E676',
+  paddingHorizontal: 20,
+  paddingVertical: 10,
+  borderRadius: 8,
+},
+
+goShopText: {
+  color: '#000',
+  fontWeight: 'bold',
+  fontSize: 16,
+},
 })

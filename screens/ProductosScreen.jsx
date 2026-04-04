@@ -8,7 +8,6 @@ export default function ProductosScreen({ navigation }) {
     <View style={styles.container}>
       <FlatList
         data={videojuegos.videojuegos}
-        keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
           <TarjetaProductos item={item} navigation={navigation} />
         )}

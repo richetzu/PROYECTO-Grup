@@ -1,19 +1,11 @@
 import { getDB } from '../database/db';
 
-// Función auxiliar para esperar a que la BD esté lista
-const waitForDB = async (retries = 20) => {
-  for (let i = 0; i < retries; i++) {
-    const db = getDB();
-    if (db) return db;
-    await new Promise(resolve => setTimeout(resolve, 500));
-  }
-  throw new Error('Base de datos no disponible después de ' + retries + ' intentos');
-};
+
 
 // GUARDAR COMPRA EN EL HISTORIAL
-export const guardarCompra = async (usuario, productos, total) => {
+export async function guardarCompra (usuario, productos, total){
   try {
-    const db = await waitForDB();
+    const db=getDB();
 
     // productos es un array de objetos: [{nombre, cantidad}, ...]
     // Lo guardamos como JSON string
@@ -33,9 +25,9 @@ export const guardarCompra = async (usuario, productos, total) => {
 };
 
 // OBTENER HISTORIAL DE COMPRAS DEL USUARIO
-export const obtenerHistorialCompras = async (usuario) => {
+export async function obtenerHistorialCompras (usuario) {
   try {
-    const db = await waitForDB();
+    const db=getDB();
 
     const compras = await db.getAllAsync(
       'SELECT * FROM compras WHERE usuario = ? ORDER BY fechaCompra DESC',
@@ -57,9 +49,9 @@ export const obtenerHistorialCompras = async (usuario) => {
 };
 
 // OBTENER TODAS LAS COMPRAS (admin)
-export const obtenerTodasCompras = async () => {
+export async function obtenerTodasCompras () {
   try {
-    const db = await waitForDB();
+    const db=getDB();
 
     const compras = await db.getAllAsync('SELECT * FROM compras ORDER BY fechaCompra DESC');
 
@@ -76,9 +68,9 @@ export const obtenerTodasCompras = async () => {
 };
 
 // ELIMINAR COMPRA (opcional)
-export const eliminarCompra = async (compraId) => {
+export async function eliminarCompra (compraId) {
   try {
-    const db = await waitForDB();
+    const db=getDB();
 
     await db.runAsync('DELETE FROM compras WHERE id = ?', [compraId]);
     return { success: true, message: 'Compra eliminada' };

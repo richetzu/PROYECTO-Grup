@@ -1,79 +1,92 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
 
 export default function WelcomeScreen({ navigation }) {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Quitox Games 🎮</Text>
+    <ImageBackground
+      source={{ uri: 'https://images.pexels.com/photos/8721318/pexels-photo-8721318.jpeg' }}
+      style={styles.container}
+    >
+      <View style={styles.overlay}>
 
-      
-      <Image
-        source={{ uri: 'https://images.pexels.com/photos/8721318/pexels-photo-8721318.jpeg' }}
-        style={styles.image}
-      />
+        <Text style={styles.title}>Quitox Games 🎮</Text>
 
-      <View style={styles.row}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate('Registro')}
-        >
-          <Text style={styles.buttonText}>Registrate</Text>
-        </TouchableOpacity>
+        <Text style={styles.subtitle}>
+          Los mejores Videojuegos
+        </Text>
 
         <TouchableOpacity
-          style={[styles.button, styles.altButton]}
+          style={styles.loginButton}
           onPress={() => navigation.navigate('Login')}
         >
           <Text style={styles.buttonText}>Iniciar Sesión</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.registerButton}
+          onPress={() => navigation.navigate('Registro')}
+        >
+          <Text style={styles.buttonText}>Crear Cuenta</Text>
+        </TouchableOpacity>
+
       </View>
-    </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { 
-    flex: 1, 
-    justifyContent: 'center', 
-    alignItems: 'center', 
-    backgroundColor: '#0d0d0d' 
+  container: {
+    flex: 1,
+    justifyContent: 'center',
   },
-  title: { 
-    fontSize: 32, 
-    fontWeight: 'bold', 
-    marginBottom: 20, 
-    color: '#00ffcc', 
-    textShadowColor: '#ff00ff', 
-    textShadowOffset: { width: 2, height: 2 }, 
-    textShadowRadius: 5 
+
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.7)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
   },
-  image: { 
-    width: 200, 
-    height: 200, 
-    marginBottom: 30, 
-    borderRadius: 20 
+
+  title: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '#00E676',
+    marginBottom: 10,
   },
-  row: { 
-    flexDirection: 'row', 
-    justifyContent: 'space-around', 
-    width: '80%' 
+
+  subtitle: {
+    fontSize: 16,
+    color: '#ccc',
+    marginBottom: 40,
+    textAlign: 'center',
   },
-  button: { 
-    backgroundColor: '#66ff00c0', 
-    paddingVertical: 15, 
-    paddingHorizontal: 25, 
-    borderRadius: 8, 
-    marginHorizontal: 5, 
-    borderWidth: 2, 
-    borderColor: '#00ffcc' 
+
+  loginButton: {
+    backgroundColor: '#00E676',
+    width: '80%',
+    padding: 15,
+    borderRadius: 12,
+    marginBottom: 15,
+    alignItems: 'center',
   },
-  altButton: { 
-    backgroundColor: '#a6ff00' 
+
+  registerButton: {
+    borderWidth: 1,
+    borderColor: '#00E676',
+    width: '80%',
+    padding: 15,
+    borderRadius: 12,
+    alignItems: 'center',
   },
-  buttonText: { 
-    color: '#fff', 
-    fontSize: 16, 
-    fontWeight: 'bold', 
-    textTransform: 'uppercase' 
-  }
+
+  buttonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
 });
+
+
+//https://images.pexels.com/photos/8721318/pexels-photo-8721318.jpeg
+//Quitox Games 🎮
